@@ -46,7 +46,6 @@ public class SignedInActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.main_content, new DoctorListFragment()).commit();
-        setTitle("Doctor List");
     }
 
     @Override
@@ -79,10 +78,12 @@ public class SignedInActivity extends AppCompatActivity {
 
                         // Insert the fragment by replacing any existing fragment
                         FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.main_content, fragment).commit();
+                        fragmentManager
+                                .beginTransaction()
+                                .replace(R.id.main_content, fragment)
+                                .addToBackStack(null)
+                                .commit();
 
-                        // Set action bar title
-                        setTitle(menuItem.getTitle());
                         // Close the navigation drawer
                         drawer.closeDrawers();
                         return true;
