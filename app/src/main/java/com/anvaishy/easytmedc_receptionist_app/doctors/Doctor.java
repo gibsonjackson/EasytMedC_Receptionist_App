@@ -1,4 +1,4 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.doctors;
 
 public class Doctor {
     private final String docID;

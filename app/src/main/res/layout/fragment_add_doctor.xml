@@ -3,14 +3,14 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.anvaishy.easytmedc_receptionist_app.AddDoctorViewModel" />
+            type="com.anvaishy.easytmedc_receptionist_app.doctors.AddDoctorViewModel" />
     </data>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddDoctorFragment">
+    tools:context=".doctors.AddDoctorFragment">
 
 
 
@@ -79,7 +79,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Add doctor"
-            android:onClick="@{() -> viewmodel.add()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/endTime" />

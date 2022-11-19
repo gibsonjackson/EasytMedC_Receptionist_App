@@ -1,7 +1,6 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.doctors;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.anvaishy.easytmedc_receptionist_app.R;
 import com.anvaishy.easytmedc_receptionist_app.databinding.FragmentAddDoctorBinding;
 
 import java.util.ArrayList;
@@ -45,11 +45,11 @@ public class AddDoctorFragment extends Fragment {
 
         Bundle args = getArguments();
 
-
         EditText name = root.findViewById(R.id.nameField);
         Spinner spinner = root.findViewById(R.id.spinner);
         Button start = root.findViewById(R.id.startTime);
         Button end = root.findViewById(R.id.endTime);
+        Button addOrEdit = (Button) root.findViewById(R.id.addDoctor);
 
         mViewModel = new ViewModelProvider(this).get(AddDoctorViewModel.class);
         binding.setLifecycleOwner(this);
@@ -60,6 +60,7 @@ public class AddDoctorFragment extends Fragment {
             mViewModel.start.setValue(args.getString("start"));
             name.setFocusable(false);
             mViewModel.end.setValue(args.getString("end"));
+            addOrEdit.setText("Edit Doctor");
         }
 
         final Observer<ArrayList<String>> specObserver = specs -> {
@@ -154,12 +155,12 @@ public class AddDoctorFragment extends Fragment {
         });
 
 
-        ( (Button) root.findViewById(R.id.addDoctor) ).setOnClickListener(new View.OnClickListener() {
+        addOrEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(args == null) mViewModel.add();
                 else mViewModel.edit(args.getString("ID"));
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_content, new DoctorListFragment()).commit();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

@@ -1,4 +1,4 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.sos;
 
 public class RequestSOS {
     private final String SOSID;

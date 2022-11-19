@@ -1,4 +1,4 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.medpass;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MedDocsFragment extends Fragment {
+import com.anvaishy.easytmedc_receptionist_app.R;
 
-    private MedDocsViewModel mViewModel;
+public class MedPassFragment extends Fragment {
 
-    public static MedDocsFragment newInstance() {
-        return new MedDocsFragment();
+    private MedPassViewModel mViewModel;
+
+    public static MedPassFragment newInstance() {
+        return new MedPassFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_med_docs, container, false);
+        return inflater.inflate(R.layout.fragment_med_pass, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MedDocsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MedPassViewModel.class);
         // TODO: Use the ViewModel
     }
 

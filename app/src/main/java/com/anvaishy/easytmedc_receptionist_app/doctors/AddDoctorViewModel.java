@@ -1,7 +1,11 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.doctors;
+
+import android.os.AsyncTask;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.anvaishy.easytmedc_receptionist_app.DataRepository;
 
 import java.util.ArrayList;
 
@@ -23,9 +27,23 @@ public class AddDoctorViewModel extends ViewModel {
     public MutableLiveData<ArrayList<String>> getSpecList() {
         if (specList == null) {
             specList = new MutableLiveData<>();
-            specList.setValue(DataRepository.getSpecs());
         }
+        SpecListTask runner = new SpecListTask();
+        runner.execute();
         return specList;
+    }
+
+    private class SpecListTask extends AsyncTask<Void, Void, ArrayList<String>> {
+
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            return DataRepository.getSpecs();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> specs) {
+            specList.setValue(specs);
+        }
     }
 
     public void edit(String id) {

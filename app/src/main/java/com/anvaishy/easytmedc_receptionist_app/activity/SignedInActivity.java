@@ -1,9 +1,8 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,6 +10,11 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.anvaishy.easytmedc_receptionist_app.meddocs.MedDocsFragment;
+import com.anvaishy.easytmedc_receptionist_app.medpass.MedPassFragment;
+import com.anvaishy.easytmedc_receptionist_app.R;
+import com.anvaishy.easytmedc_receptionist_app.sos.SOSFragment;
+import com.anvaishy.easytmedc_receptionist_app.doctors.DoctorListFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class SignedInActivity extends AppCompatActivity {

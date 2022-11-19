@@ -1,4 +1,4 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.sos;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anvaishy.easytmedc_receptionist_app.R;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,9 +21,15 @@ import java.util.TimeZone;
 public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
 
     private final ArrayList<RequestSOS> dataset;
+    private final OnItemClickListener listener;
 
-    public SOSAdapter(ArrayList<RequestSOS> dataset) {
+    public interface OnItemClickListener {
+        void onItemClick(RequestSOS item);
+    }
+
+    public SOSAdapter(ArrayList<RequestSOS> dataset, OnItemClickListener listener) {
         this.dataset = dataset;
+        this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,7 +76,7 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
             this.location.setText(name);
         }
 
-        public void setClick(boolean response) {
+        public void setClickAndColor(OnItemClickListener listener, boolean response, RequestSOS request) {
 
             if(response) {
                 card.setCardBackgroundColor(Color.parseColor("#00FF00"));
@@ -78,8 +86,7 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
                 respond.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        card.setCardBackgroundColor(Color.parseColor("#00FF00"));
-                        respond.setVisibility(View.GONE);
+                        listener.onItemClick(request);
                     }
                 });
             }
@@ -101,7 +108,7 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         holder.setLocation(request.getLocation());
         holder.setTime(request.getTime());
         holder.setDesc(request.getDesc());
-        holder.setClick(request.isResponded());
+        holder.setClickAndColor(listener, request.isResponded(), request);
     }
 
     @Override

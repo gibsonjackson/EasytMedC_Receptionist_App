@@ -1,4 +1,4 @@
-package com.anvaishy.easytmedc_receptionist_app;
+package com.anvaishy.easytmedc_receptionist_app.doctors;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,11 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.anvaishy.easytmedc_receptionist_app.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -46,8 +45,6 @@ public class DoctorListFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.doctor_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        Spinner spinner = root.findViewById(R.id.spinner);
-
         ( (FloatingActionButton) root.findViewById(R.id.addDocFab) ).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +65,6 @@ public class DoctorListFragment extends Fragment {
                 @Override
                 public void onItemClick(Doctor item) {
                     mViewModel.deleteDoctor(item);
-                    getParentFragmentManager().beginTransaction().replace(R.id.main_content, new DoctorListFragment()).commit();
                 }
             },
                     new DoctorAdapter.OnItemClickListener() {
@@ -98,15 +94,6 @@ public class DoctorListFragment extends Fragment {
 
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
         mViewModel.getList().observe(getViewLifecycleOwner(), listObserver);
-
-        final Observer<ArrayList<String>> specObserver = specs -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, specs);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            adapter.notifyDataSetChanged();
-            spinner.setAdapter(adapter);
-        };
-
-        mViewModel.getSpecList().observe(getViewLifecycleOwner(), specObserver);
 
         return root;
     }
