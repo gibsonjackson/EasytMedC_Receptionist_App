@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="fl_flow_blue">#0072DE</color>
     <color name="gray">#DFDFDF</color>
+    <color name="primary_blue">#FF0072DE</color>
 </resources>
