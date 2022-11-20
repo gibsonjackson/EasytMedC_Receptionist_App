@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">EasytMedC_Receptionist_App</string>
+    <string name="web_client_id">2350897725-kttff7vupbvvs75m7hrif1hhnrdoc3gp.apps.googleusercontent.com</string>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
 </resources>

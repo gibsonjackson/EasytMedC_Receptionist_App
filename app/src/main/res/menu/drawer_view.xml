@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_doctor_list"
+        android:title="Doctor List" />
+    <item
+        android:id="@+id/nav_med_docs"
+        android:title="Medical Documents" />
+    <item
+        android:id="@+id/nav_sos_reqs"
+        android:title="SOS Requests" />
+
+    <item
+        android:id="@+id/nav_medpass_req"
+        android:title="Medical Pass Requests" />
+
+</menu>
