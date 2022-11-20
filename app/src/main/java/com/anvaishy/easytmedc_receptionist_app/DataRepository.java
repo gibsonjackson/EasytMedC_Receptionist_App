@@ -31,6 +31,13 @@ public class DataRepository {
                 .addOnCompleteListener(listener);
 
     }
+    public static void getDocumentList(String ID,OnCompleteListener<QuerySnapshot> listener) {
+
+        db.collection("Users").document(ID).collection("Document")
+                .get()
+                .addOnCompleteListener(listener);
+
+    }
 
     public static ArrayList<String> getSpecs() {
         ArrayList<String> list = new ArrayList<>();

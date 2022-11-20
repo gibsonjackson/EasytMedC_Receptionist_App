@@ -7,8 +7,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.anvaishy.easytmedc_receptionist_app.meddocs.MedDocsFragment;
 import com.anvaishy.easytmedc_receptionist_app.medpass.MedPassFragment;
@@ -58,6 +61,11 @@ public class SignedInActivity extends AppCompatActivity {
         if(toggle.onOptionsItemSelected(item)) return true;
 
         return super.onOptionsItemSelected(item);
+    }
+    public void openURL(String url){
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
