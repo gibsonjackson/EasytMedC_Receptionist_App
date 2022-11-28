@@ -137,10 +137,10 @@ public class DataRepository {
     }
     public static void editDoctor(Doctor doctor) {
         Map<String, Object> map = new HashMap<>();
-        map.put("Name", doctor.getName());
-        map.put("Specialisation", doctor.getSpecialisation());
-        map.put("Start time", doctor.getStartTime());
-        map.put("End time", doctor.getEndTime());
+        map.put("name", doctor.getName());
+        map.put("specialisation", doctor.getSpecialisation());
+        map.put("startTime", doctor.getStartTime());
+        map.put("endTime", doctor.getEndTime());
 
         db.collection("Doctor")
                 .document(doctor.getDocID())
@@ -182,10 +182,10 @@ public class DataRepository {
 //
     public static void addDoctor(Doctor doctor) {
         Map<String, Object> map = new HashMap<>();
-        map.put("Name", doctor.getName());
-        map.put("Specialisation", doctor.getSpecialisation());
-        map.put("Start time", doctor.getStartTime());
-        map.put("End time", doctor.getEndTime());
+        map.put("name", doctor.getName());
+        map.put("specialisation", doctor.getSpecialisation());
+        map.put("startTime", doctor.getStartTime());
+        map.put("endTime", doctor.getEndTime());
 
         db.collection("Doctor")
                 .add(map)
