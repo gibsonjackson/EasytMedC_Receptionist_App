@@ -3,6 +3,8 @@ package com.anvaishy.easytmedc_receptionist_app.sos;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -51,6 +53,21 @@ public class SOSFragment extends Fragment {
                 @Override
                 public void onItemClick(RequestSOS item) {
                     mViewModel.respondSOS(item);
+                }
+            }, new SOSAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(RequestSOS item) {
+                    double lat = item.getLocation().getLatitude();
+                    double lon = item.getLocation().getLongitude();
+                    Uri link = Uri.parse("https://www.google.com/maps/search/?api=1&query=" + lat + ","  + lon);
+
+                    // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, link);
+                    // Make the Intent explicit by setting the Google Maps package
+//                    mapIntent.setPackage("com.google.android.apps.maps");
+
+                    // Attempt to start an activity that can handle the Intent
+                    startActivity(mapIntent);
                 }
             });
             sos_list.setAdapter(adapter);

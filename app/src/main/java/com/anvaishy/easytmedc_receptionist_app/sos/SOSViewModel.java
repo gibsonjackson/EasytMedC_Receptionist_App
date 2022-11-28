@@ -52,7 +52,7 @@ public class SOSViewModel extends ViewModel {
                                                 (String) doc.get("UID"),
                                                 (String) doc.get("Phone No"),
                                                 (String) doc.get("Description"),
-                                                ((GeoPoint) Objects.requireNonNull(doc.get("location"))).toString(),
+                                                (GeoPoint) Objects.requireNonNull(doc.get("location")),
                                                 (boolean) doc.get("Status"),
                                                 ((Timestamp) doc.get("time")).toDate().getTime(),
                                                 document.getId()
@@ -81,7 +81,7 @@ public class SOSViewModel extends ViewModel {
                                         (String) doc.get("UID"),
                                         (String) doc.get("Phone No"),
                                         (String) doc.get("Description"),
-                                        ((GeoPoint) Objects.requireNonNull(doc.get("location"))).toString(),
+                                        (GeoPoint) Objects.requireNonNull(doc.get("location")),
                                         (Boolean) doc.get("Status"),
                                         ((Timestamp) doc.get("time")).toDate().getTime(),
                                         document.getId()

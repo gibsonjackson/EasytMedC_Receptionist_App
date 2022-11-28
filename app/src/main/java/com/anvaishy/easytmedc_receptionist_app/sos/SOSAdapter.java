@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anvaishy.easytmedc_receptionist_app.R;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,15 +22,16 @@ import java.util.TimeZone;
 public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
 
     private final ArrayList<RequestSOS> dataset;
-    private final OnItemClickListener listener;
+    private final OnItemClickListener listener1, listener2;
 
     public interface OnItemClickListener {
         void onItemClick(RequestSOS item);
     }
 
-    public SOSAdapter(ArrayList<RequestSOS> dataset, OnItemClickListener listener) {
+    public SOSAdapter(ArrayList<RequestSOS> dataset, OnItemClickListener listener1, OnItemClickListener listener2) {
         this.dataset = dataset;
-        this.listener = listener;
+        this.listener1 = listener1;
+        this.listener2 = listener2;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,7 +39,7 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         private TextView uid;
         private TextView desc;
         private TextView time;
-        private TextView location;
+        private Button location;
         private CardView card;
         private Button respond;
         public ViewHolder(@NonNull View itemView) {
@@ -72,8 +74,13 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
             this.time.setText(sdf.format(date));
         }
 
-        public void setLocation(String name) {
-            this.location.setText(name);
+        public void setLocation(OnItemClickListener listener, RequestSOS request) {
+            this.location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(request);
+                }
+            });
         }
 
         public void setClickAndColor(OnItemClickListener listener, boolean response, RequestSOS request) {
@@ -105,10 +112,10 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         RequestSOS request = dataset.get(position);
         holder.setName(request.getName());
         holder.setUid(request.getSID());
-        holder.setLocation(request.getLocation());
+        holder.setLocation(listener2, request);
         holder.setTime(request.getTime());
         holder.setDesc(request.getDesc());
-        holder.setClickAndColor(listener, request.isResponded(), request);
+        holder.setClickAndColor(listener1, request.isResponded(), request);
     }
 
     @Override
