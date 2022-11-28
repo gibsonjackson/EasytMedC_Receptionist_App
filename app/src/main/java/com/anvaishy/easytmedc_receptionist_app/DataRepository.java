@@ -7,11 +7,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.anvaishy.easytmedc_receptionist_app.doctors.Doctor;
+import com.anvaishy.easytmedc_receptionist_app.medpass.MedPassViewModel;
+import com.anvaishy.easytmedc_receptionist_app.medpass.MedicalPassRequestGlobal;
 import com.anvaishy.easytmedc_receptionist_app.sos.RequestSOS;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,6 +34,12 @@ public class DataRepository {
                 .addOnCompleteListener(listener);
 
     }
+    public static void getRequestList(OnCompleteListener<QuerySnapshot> listener) {
+        db.collection("Medical Pass Requests").orderBy("status")
+                .get()
+                .addOnCompleteListener(listener);
+    }
+
     public static void getDocumentList(String ID,OnCompleteListener<QuerySnapshot> listener) {
 
         db.collection("Users").document(ID).collection("Document")
@@ -38,6 +47,7 @@ public class DataRepository {
                 .addOnCompleteListener(listener);
 
     }
+
 
     public static ArrayList<String> getSpecs() {
         ArrayList<String> list = new ArrayList<>();
@@ -78,6 +88,53 @@ public class DataRepository {
                 });
     }
 //
+    public static void updatePass(MedicalPassRequestGlobal medicalPassRequestGlobal,int status){
+        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> student = new HashMap<>();
+        String email = medicalPassRequestGlobal.getUid();
+        map.put("name",medicalPassRequestGlobal.getName());
+        map.put("phoneNo",medicalPassRequestGlobal.getPhoneNo());
+        map.put("uid",medicalPassRequestGlobal.getUid());
+        map.put("description",medicalPassRequestGlobal.getDescription());
+        map.put("status",status);
+        map.put("arrival",medicalPassRequestGlobal.getArrival());
+        map.put("depart",medicalPassRequestGlobal.getDepart());
+        student.put("description",medicalPassRequestGlobal.getDescription());
+        student.put("arrival",medicalPassRequestGlobal.getArrival());
+        student.put("depart",medicalPassRequestGlobal.getDepart());
+        student.put("status",status);
+        db.collection("Medical Pass Requests")
+                .document(medicalPassRequestGlobal.getDocID())
+                .set(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+        db.collection("Users").document(medicalPassRequestGlobal.getUid()).collection("Medical Pass Requests")
+                .document(medicalPassRequestGlobal.getDocID())
+                .set(student)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+    }
     public static void editDoctor(Doctor doctor) {
         Map<String, Object> map = new HashMap<>();
         map.put("Name", doctor.getName());
