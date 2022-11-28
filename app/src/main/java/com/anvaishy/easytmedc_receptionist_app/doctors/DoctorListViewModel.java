@@ -31,10 +31,10 @@ public class DoctorListViewModel extends ViewModel {
 
                         list.add(
                                 new Doctor(
-                                        (String) doc.get("Name"),
-                                        (String) doc.get("Specialisation"),
-                                        (String) doc.get("Start time"),
-                                        (String) doc.get("End time"),
+                                        (String) doc.get("name"),
+                                        (String) doc.get("specialisation"),
+                                        (String) doc.get("startTime"),
+                                        (String) doc.get("endTime"),
                                         document.getId()
                                 )
                         );

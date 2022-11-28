@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class AddDoctorFragment extends Fragment {
         Bundle args = getArguments();
 
         EditText name = root.findViewById(R.id.nameField);
-        Spinner spinner = root.findViewById(R.id.spinner);
+        Spinner spinner = root.findViewById(R.id.docspinner);
         Button start = root.findViewById(R.id.startTime);
         Button end = root.findViewById(R.id.endTime);
         Button addOrEdit = (Button) root.findViewById(R.id.addDoctor);
@@ -75,6 +76,7 @@ public class AddDoctorFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("Some data: ---",i+" "+l);
                 mViewModel.spec.setValue(i);
             }
 

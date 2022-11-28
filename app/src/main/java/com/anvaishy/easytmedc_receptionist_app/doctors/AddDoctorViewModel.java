@@ -1,6 +1,7 @@
 package com.anvaishy.easytmedc_receptionist_app.doctors;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class AddDoctorViewModel extends ViewModel {
     // TODO: Implement the ViewModel
     public MutableLiveData<String> name = new MutableLiveData<>("");
-    public MutableLiveData<Integer> spec = new MutableLiveData<>(0);
+    public MutableLiveData<Integer> spec = new MutableLiveData<>();
     public MutableLiveData<String> start = new MutableLiveData<>("Start Time");
     public MutableLiveData<String> end = new MutableLiveData<>("End Time");
 
@@ -38,6 +39,7 @@ public class AddDoctorViewModel extends ViewModel {
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
             return DataRepository.getSpecs();
+
         }
 
         @Override
@@ -47,6 +49,7 @@ public class AddDoctorViewModel extends ViewModel {
     }
 
     public void edit(String id) {
+        Log.e("Some data",spec.getValue()+"---");
         Doctor d = new Doctor(name.getValue(), specList.getValue().get(spec.getValue()), start.getValue(), end.getValue(), id);
         DataRepository.editDoctor(d);
     }
