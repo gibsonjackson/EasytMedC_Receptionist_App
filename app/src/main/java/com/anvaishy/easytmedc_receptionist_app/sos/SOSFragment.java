@@ -1,8 +1,16 @@
 package com.anvaishy.easytmedc_receptionist_app.sos;
 
+import static android.Manifest.permission.CALL_PHONE;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.anvaishy.easytmedc_receptionist_app.R;
+import com.anvaishy.easytmedc_receptionist_app.activity.SignedInActivity;
 
 import java.util.ArrayList;
 
@@ -52,6 +61,38 @@ public class SOSFragment extends Fragment {
                 public void onItemClick(RequestSOS item) {
                     mViewModel.respondSOS(item);
                 }
+            }, new SOSAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(RequestSOS item) {
+                    double lat = item.getLocation().getLatitude();
+                    double lon = item.getLocation().getLongitude();
+                    Uri link = Uri.parse("https://www.google.com/maps/search/?api=1&query=" + lat + "," + lon);
+
+                    // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, link);
+                    // Make the Intent explicit by setting the Google Maps package
+//                    mapIntent.setPackage("com.google.android.apps.maps");
+
+                    // Attempt to start an activity that can handle the Intent
+                    startActivity(mapIntent);
+                }},new SOSAdapter.OnItemClickListener()
+                {
+                    @Override
+                            public void onItemClick(RequestSOS item){
+                        String number = ("tel:" + item.getPhone().trim());
+                        if(item.getPhone().equals("N/A")){
+
+                        }
+                        Intent mIntent = new Intent(Intent.ACTION_CALL);
+                        mIntent.setData(Uri.parse(number));
+                        if (ContextCompat.checkSelfPermission(getActivity(), CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                            startActivity(mIntent);
+                        } else {
+                            requestPermissions(new String[]{CALL_PHONE}, 1);
+                        }
+                }
+
+
             });
             sos_list.setAdapter(adapter);
         };

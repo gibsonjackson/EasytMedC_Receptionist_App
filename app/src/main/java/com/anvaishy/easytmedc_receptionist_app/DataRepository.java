@@ -49,25 +49,12 @@ public class DataRepository {
     }
 
 
-    public static ArrayList<String> getSpecs() {
-        ArrayList<String> list = new ArrayList<>();
+    public static void getSpecs(OnCompleteListener<QuerySnapshot> listener) {
 
         db.collection("Specialization")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Map<String, Object> doc = document.getData();
+                .addOnCompleteListener(listener);
 
-                                list.add((String) doc.get("name"));
-                            }
-                        }
-                    }
-                });
-
-        return list;
     }
 
     public static void deleteDoctor(String id) {
@@ -205,7 +192,7 @@ public class DataRepository {
 
     public static void getSOSList(OnCompleteListener<QuerySnapshot> listener) {
 
-        db.collection("Ambulance Requests")
+        db.collection("Ambulance Requests").orderBy("Status")
                 .get()
                 .addOnCompleteListener(listener);
 

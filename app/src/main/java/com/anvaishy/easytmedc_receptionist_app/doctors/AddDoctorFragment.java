@@ -51,7 +51,6 @@ public class AddDoctorFragment extends Fragment {
         Button start = root.findViewById(R.id.startTime);
         Button end = root.findViewById(R.id.endTime);
         Button addOrEdit = (Button) root.findViewById(R.id.addDoctor);
-
         mViewModel = new ViewModelProvider(this).get(AddDoctorViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setViewmodel(mViewModel);
@@ -67,31 +66,54 @@ public class AddDoctorFragment extends Fragment {
         final Observer<ArrayList<String>> specObserver = specs -> {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, specs);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            adapter.notifyDataSetChanged();
+            if(args != null) mViewModel.spec.setValue(adapter.getPosition(args.getString("spec")));
             spinner.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            spinner.setSelection(mViewModel.spec.getValue());
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Log.e("Some data: -+--",i+" "+l);
+                    mViewModel.spec.setValue(i);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            Log.d("Pos", " " + specs.size());
         };
 
         mViewModel.getSpecList().observe(getViewLifecycleOwner(), specObserver);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("Some data: ---",i+" "+l);
-                mViewModel.spec.setValue(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar c = Calendar.getInstance();
-                int mHour = c.get(Calendar.HOUR_OF_DAY);
-                int mMinute = c.get(Calendar.MINUTE);
+                int mHour, mMinute;
+                String curr = start.getText().toString();
+                if(curr.equals("Start Time")) {
+                    final Calendar c = Calendar.getInstance();
+                    mHour = c.get(Calendar.HOUR_OF_DAY);
+                    mMinute = c.get(Calendar.MINUTE);
+                }
+
+                else {
+                    int h = Integer.parseInt(curr.substring(0, 2));
+                    int min = Integer.parseInt(curr.substring(3, 5));
+                    String m = curr.substring(curr.length() - 2);
+                    if(m.equals("AM") && h == 12) {
+                        h -= 12;
+                    }
+
+                    else if(m.equals("PM") && h != 12) h += 12;
+
+                    mHour = h;
+                    mMinute = min;
+                }
+
 
                 // Launch Time Picker Dialog
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
@@ -102,9 +124,10 @@ public class AddDoctorFragment extends Fragment {
                                                   int minute) {
 
                                 StringBuilder str = new StringBuilder();
-                                if(hourOfDay < 10 || (hourOfDay > 12 && hourOfDay < 22)) str.append("0");
+                                if((hourOfDay != 0 && hourOfDay < 10) || (hourOfDay > 12 && hourOfDay < 22)) str.append("0");
 
                                 if(hourOfDay > 12) str.append(hourOfDay - 12);
+                                else if (hourOfDay == 0) str.append(12);
                                 else str.append(hourOfDay);
 
                                 str.append(':');
@@ -117,6 +140,7 @@ public class AddDoctorFragment extends Fragment {
                                 mViewModel.start.setValue(str.toString());
                             }
                         }, mHour, mMinute, false);
+                Log.e("Some data: ---","Time Selected");
                 timePickerDialog.show();
             }
         });
@@ -124,9 +148,28 @@ public class AddDoctorFragment extends Fragment {
         end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar c = Calendar.getInstance();
-                int mHour = c.get(Calendar.HOUR_OF_DAY);
-                int mMinute = c.get(Calendar.MINUTE);
+
+                int mHour, mMinute;
+                String curr = end.getText().toString();
+                if(curr.equals("End Time")) {
+                    final Calendar c = Calendar.getInstance();
+                    mHour = c.get(Calendar.HOUR_OF_DAY);
+                    mMinute = c.get(Calendar.MINUTE);
+                }
+
+                else {
+                    int h = Integer.parseInt(curr.substring(0, 2));
+                    int min = Integer.parseInt(curr.substring(3, 5));
+                    String m = curr.substring(curr.length() - 2);
+                    if(m.equals("AM") && h == 12) {
+                        h -= 12;
+                    }
+
+                    else if(m.equals("PM") && h != 12) h += 12;
+
+                    mHour = h;
+                    mMinute = min;
+                }
 
                 // Launch Time Picker Dialog
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
@@ -152,6 +195,7 @@ public class AddDoctorFragment extends Fragment {
                                 mViewModel.end.setValue(str.toString());
                             }
                         }, mHour, mMinute, false);
+                Log.e("Some data: ---","Time Selected");
                 timePickerDialog.show();
             }
         });
@@ -168,5 +212,6 @@ public class AddDoctorFragment extends Fragment {
 
         return root;
     }
+
 
 }

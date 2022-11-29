@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class SignedInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in);
 
+        Intent intent = getIntent();
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,7 +54,12 @@ public class SignedInActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.main_content, new DoctorListFragment()).commit();
+        Fragment frag;
+        Log.d("", "" + intent.getBooleanExtra("openSOS", false));
+        if(!intent.getBooleanExtra("openSOS", false)) frag = new DoctorListFragment();
+        else frag = new SOSFragment();
+
+        fragmentManager.beginTransaction().add(R.id.main_content, frag).commit();
     }
 
     @Override

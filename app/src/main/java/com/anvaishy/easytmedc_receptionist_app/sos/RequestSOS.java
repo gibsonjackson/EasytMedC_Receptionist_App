@@ -1,16 +1,18 @@
 package com.anvaishy.easytmedc_receptionist_app.sos;
 
+import com.google.firebase.firestore.GeoPoint;
+
 public class RequestSOS {
     private final String SOSID;
     private String name;
     private String SID;
     private String phone;
     private String desc;
-    private String location;
+    private GeoPoint location;
     private boolean responded;
     private long time;
 
-    public RequestSOS(String name, String SID, String phone, String desc, String location, boolean responded, long time, String id) {
+    public RequestSOS(String name, String SID, String phone, String desc, GeoPoint location, boolean responded, long time, String id) {
         this.name = name;
         this.SID = SID;
         this.phone = phone;
@@ -37,7 +39,7 @@ public class RequestSOS {
         return desc;
     }
 
-    public String getLocation() {
+    public GeoPoint getLocation() {
         return location;
     }
 

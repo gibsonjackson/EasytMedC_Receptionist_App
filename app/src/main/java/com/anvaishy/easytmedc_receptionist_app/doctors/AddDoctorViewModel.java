@@ -3,17 +3,23 @@ package com.anvaishy.easytmedc_receptionist_app.doctors;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.anvaishy.easytmedc_receptionist_app.DataRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class AddDoctorViewModel extends ViewModel {
     // TODO: Implement the ViewModel
     public MutableLiveData<String> name = new MutableLiveData<>("");
-    public MutableLiveData<Integer> spec = new MutableLiveData<>();
+    public MutableLiveData<Integer> spec = new MutableLiveData<>(0);
     public MutableLiveData<String> start = new MutableLiveData<>("Start Time");
     public MutableLiveData<String> end = new MutableLiveData<>("End Time");
 
@@ -29,27 +35,27 @@ public class AddDoctorViewModel extends ViewModel {
         if (specList == null) {
             specList = new MutableLiveData<>();
         }
-        SpecListTask runner = new SpecListTask();
-        runner.execute();
+        DataRepository.getSpecs(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<String> list = new ArrayList<>();
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> doc = document.getData();
+
+                        list.add((String) doc.get("name"));
+                    }
+                }
+
+                specList.setValue(list);
+            }
+        });
         return specList;
     }
 
-    private class SpecListTask extends AsyncTask<Void, Void, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(Void... voids) {
-            return DataRepository.getSpecs();
-
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<String> specs) {
-            specList.setValue(specs);
-        }
-    }
 
     public void edit(String id) {
-        Log.e("Some data",spec.getValue()+"---");
+        Log.e("Some VM data index",spec.getValue()+"---");
         Doctor d = new Doctor(name.getValue(), specList.getValue().get(spec.getValue()), start.getValue(), end.getValue(), id);
         DataRepository.editDoctor(d);
     }
