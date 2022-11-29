@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(data);
                 String username = credential.getId();
 
-                if(username.equals("f20200055@hyderabad.bits-pilani.ac.in")||username.equals("f20200104@hyderabad.bits-pilani.ac.in")) {
+                if(username.equals("f20200055@hyderabad.bits-pilani.ac.in")||username.equals("f20200104@hyderabad.bits-pilani.ac.in")||username.equals("f20200002@hyderabad.bits-pilani.ac.in")) {
 
                     SharedPreferences prefs = this.getSharedPreferences("prefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
