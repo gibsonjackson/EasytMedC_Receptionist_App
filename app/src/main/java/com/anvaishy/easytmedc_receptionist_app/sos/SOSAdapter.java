@@ -22,16 +22,17 @@ import java.util.TimeZone;
 public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
 
     private final ArrayList<RequestSOS> dataset;
-    private final OnItemClickListener listener1, listener2;
+    private final OnItemClickListener listener1, listener2, listener3;
 
     public interface OnItemClickListener {
         void onItemClick(RequestSOS item);
     }
 
-    public SOSAdapter(ArrayList<RequestSOS> dataset, OnItemClickListener listener1, OnItemClickListener listener2) {
+    public SOSAdapter(ArrayList<RequestSOS> dataset, OnItemClickListener listener1, OnItemClickListener listener2, OnItemClickListener listener3) {
         this.dataset = dataset;
         this.listener1 = listener1;
         this.listener2 = listener2;
+        this.listener3 = listener3;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,6 +43,8 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         private Button location;
         private CardView card;
         private Button respond;
+        private Button call;
+        private TextView phoneno;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.student_name);
@@ -51,6 +54,8 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
             location = itemView.findViewById(R.id.location);
             card = itemView.findViewById(R.id.card);
             respond = itemView.findViewById(R.id.respond);
+            phoneno = itemView.findViewById(R.id.phoneNo);
+            call = itemView.findViewById(R.id.call);
         }
 
         public void setName(String name) {
@@ -72,6 +77,12 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
             sdf.setTimeZone(tz);
 
             this.time.setText(sdf.format(date));
+        }
+        public void setCall(OnItemClickListener listener,RequestSOS requestSOS){
+            this.call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {listener.onItemClick(requestSOS);}
+            });
         }
 
         public void setLocation(OnItemClickListener listener, RequestSOS request) {
@@ -98,6 +109,10 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
                 });
             }
         }
+
+        public void setPhoneno(String phoneNo) {
+            phoneno.setText(phoneNo);
+        }
     }
 
     @NonNull
@@ -116,6 +131,8 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         holder.setTime(request.getTime());
         holder.setDesc(request.getDesc());
         holder.setClickAndColor(listener1, request.isResponded(), request);
+        holder.setPhoneno(request.getPhone());
+        holder.setCall(listener3,request);
     }
 
     @Override
