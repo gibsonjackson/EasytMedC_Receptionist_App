@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:textColor="@color/black"
             android:layout_marginBottom="8dp"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -61,6 +62,7 @@
             android:layout_marginTop="16dp"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -89,6 +91,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:textSize="16sp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
             app:layout_constraintEnd_toStartOf="@+id/imageView6"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -101,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textSize="20sp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/imageView5"
             app:layout_constraintTop_toBottomOf="@+id/time"
             tools:text="Sir very urgent how to get good CG and pass NLP pls guide i am noob" />
@@ -121,8 +125,8 @@
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="16dp"
             android:adjustViewBounds="true"
             android:maxWidth="32dp"
             android:maxHeight="32dp"
@@ -149,31 +153,28 @@
             android:id="@+id/phoneNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-
-            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="104dp"
+            android:layout_marginBottom="12dp"
             android:text="Phone No"
+            android:padding="5dp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/location"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.88"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            />
 
         <Button
             android:id="@+id/call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="4dp"
             android:layout_marginBottom="120dp"
             android:text="Call"
             app:layout_constraintBottom_toTopOf="@+id/respond"
-            app:layout_constraintEnd_toStartOf="@+id/phoneNo"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/student_id"
             app:layout_constraintTop_toBottomOf="@+id/view2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintLeft_toRightOf="@id/phoneNo"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="283dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

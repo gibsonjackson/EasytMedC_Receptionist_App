@@ -123,8 +123,8 @@ public class PassAdapter extends RecyclerView.Adapter<PassAdapter.ViewHolder> {
         }
         holder.desc.setText(doc.getDescription());
         holder.name.setText(doc.getName());
-        holder.start.setText(doc.getDepart().toString());
-        holder.end.setText(doc.getArrival().toString());
+        holder.start.setText(doc.getDepart().toDate().toString());
+        holder.end.setText(doc.getArrival().toDate().toString());
         holder.email.setText(doc.getUid());
         holder.setListener(listener1, listener2, doc);
 
