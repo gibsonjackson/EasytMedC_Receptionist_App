@@ -80,6 +80,9 @@ public class SOSFragment extends Fragment {
                     @Override
                             public void onItemClick(RequestSOS item){
                         String number = ("tel:" + item.getPhone().trim());
+                        if(item.getPhone().equals("N/A")){
+
+                        }
                         Intent mIntent = new Intent(Intent.ACTION_CALL);
                         mIntent.setData(Uri.parse(number));
                         if (ContextCompat.checkSelfPermission(getActivity(), CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {

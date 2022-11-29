@@ -133,6 +133,9 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         holder.setClickAndColor(listener1, request.isResponded(), request);
         holder.setPhoneno(request.getPhone());
         holder.setCall(listener3,request);
+        if(request.getPhone().isEmpty()){
+            holder.call.setVisibility(View.GONE);
+        }
     }
 
     @Override
