@@ -33,6 +33,7 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         this.listener1 = listener1;
         this.listener2 = listener2;
         this.listener3 = listener3;
+        setHasStableIds(true);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,6 +102,7 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
                 respond.setVisibility(View.GONE);
             }
             else {
+                card.setCardBackgroundColor(Color.parseColor("#FF0000"));
                 respond.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -141,5 +143,15 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return dataset.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }
