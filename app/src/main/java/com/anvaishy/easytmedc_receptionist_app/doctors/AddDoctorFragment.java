@@ -51,7 +51,6 @@ public class AddDoctorFragment extends Fragment {
         Button start = root.findViewById(R.id.startTime);
         Button end = root.findViewById(R.id.endTime);
         Button addOrEdit = (Button) root.findViewById(R.id.addDoctor);
-
         mViewModel = new ViewModelProvider(this).get(AddDoctorViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setViewmodel(mViewModel);
@@ -67,24 +66,28 @@ public class AddDoctorFragment extends Fragment {
         final Observer<ArrayList<String>> specObserver = specs -> {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, specs);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            adapter.notifyDataSetChanged();
+            if(args != null) mViewModel.spec.setValue(adapter.getPosition(args.getString("spec")));
             spinner.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            spinner.setSelection(mViewModel.spec.getValue());
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Log.e("Some data: -+--",i+" "+l);
+                    mViewModel.spec.setValue(i);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            Log.d("Pos", " " + specs.size());
         };
 
         mViewModel.getSpecList().observe(getViewLifecycleOwner(), specObserver);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("Some data: ---",i+" "+l);
-                mViewModel.spec.setValue(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +140,7 @@ public class AddDoctorFragment extends Fragment {
                                 mViewModel.start.setValue(str.toString());
                             }
                         }, mHour, mMinute, false);
+                Log.e("Some data: ---","Time Selected");
                 timePickerDialog.show();
             }
         });
@@ -191,6 +195,7 @@ public class AddDoctorFragment extends Fragment {
                                 mViewModel.end.setValue(str.toString());
                             }
                         }, mHour, mMinute, false);
+                Log.e("Some data: ---","Time Selected");
                 timePickerDialog.show();
             }
         });
@@ -207,5 +212,6 @@ public class AddDoctorFragment extends Fragment {
 
         return root;
     }
+
 
 }
