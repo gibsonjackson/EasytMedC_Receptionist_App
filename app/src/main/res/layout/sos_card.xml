@@ -82,7 +82,8 @@
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="@+id/student_id"
             app:layout_constraintTop_toBottomOf="@+id/student_id"
-            app:srcCompat="@mipmap/clock_fore" />
+            app:srcCompat="@drawable/clock_fore
+" />
 
         <TextView
             android:id="@+id/time"
@@ -133,7 +134,7 @@
             android:scaleType="fitCenter"
             app:layout_constraintStart_toEndOf="@+id/student_id"
             app:layout_constraintTop_toBottomOf="@+id/student_id"
-            app:srcCompat="@mipmap/loc_fore" />
+            app:srcCompat="@drawable/loc_fore" />
 
         <Button
             android:id="@+id/location"
