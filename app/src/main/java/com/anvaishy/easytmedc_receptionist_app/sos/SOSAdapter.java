@@ -43,6 +43,9 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         private TextView time;
         private Button location;
         private CardView card;
+        private CardView loc;
+        private CardView caller;
+        private CardView descr;
         private Button respond;
         private Button call;
         private TextView phoneno;
@@ -55,8 +58,10 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
             location = itemView.findViewById(R.id.location);
             card = itemView.findViewById(R.id.card);
             respond = itemView.findViewById(R.id.respond);
-            phoneno = itemView.findViewById(R.id.phoneNo);
             call = itemView.findViewById(R.id.call);
+            caller = itemView.findViewById(R.id.loc);
+            descr = itemView.findViewById(R.id.Desc);
+            loc = itemView.findViewById(R.id.callercard);
         }
 
         public void setName(String name) {
@@ -99,10 +104,16 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
 
             if(response) {
                 card.setCardBackgroundColor(Color.parseColor("#00FF00"));
+                loc.setCardBackgroundColor(Color.parseColor("#00FF00"));
+                descr.setCardBackgroundColor(Color.parseColor("#00FF00"));
+                caller.setCardBackgroundColor(Color.parseColor("#00FF00"));
                 respond.setVisibility(View.GONE);
             }
             else {
                 card.setCardBackgroundColor(Color.parseColor("#FF0000"));
+                loc.setCardBackgroundColor(Color.parseColor("#FF0000"));
+                descr.setCardBackgroundColor(Color.parseColor("#FF0000"));
+                caller.setCardBackgroundColor(Color.parseColor("#FF0000"));
                 respond.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -133,7 +144,6 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
         holder.setTime(request.getTime());
         holder.setDesc(request.getDesc());
         holder.setClickAndColor(listener1, request.isResponded(), request);
-        holder.setPhoneno(request.getPhone());
         holder.setCall(listener3,request);
         if(request.getPhone().isEmpty()){
             holder.call.setVisibility(View.GONE);

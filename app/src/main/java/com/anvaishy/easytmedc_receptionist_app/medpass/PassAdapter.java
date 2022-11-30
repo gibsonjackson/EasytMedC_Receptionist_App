@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anvaishy.easytmedc_receptionist_app.R;
 import com.anvaishy.easytmedc_receptionist_app.doctors.Doctor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class PassAdapter extends RecyclerView.Adapter<PassAdapter.ViewHolder> {
 
@@ -48,7 +51,9 @@ public class PassAdapter extends RecyclerView.Adapter<PassAdapter.ViewHolder> {
         private final Button accept;
         private final Button reject;
         private final CardView card;
-
+        private final CardView desc_card;
+        private final CardView arri_card;
+        private final CardView depa_card;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             desc = itemView.findViewById(R.id.med_pass_desc);
@@ -57,8 +62,11 @@ public class PassAdapter extends RecyclerView.Adapter<PassAdapter.ViewHolder> {
             accept = itemView.findViewById(R.id.Accept);
             reject = itemView.findViewById(R.id.Reject);
             card = itemView.findViewById(R.id.requestCard);
+            desc_card = itemView.findViewById(R.id.desc_card);
             email = itemView.findViewById(R.id.student_email);
             name = itemView.findViewById(R.id.passname);
+            arri_card = itemView.findViewById(R.id.arri_card);
+            depa_card = itemView.findViewById(R.id.depa_card);
         }
 
 
@@ -115,14 +123,21 @@ public class PassAdapter extends RecyclerView.Adapter<PassAdapter.ViewHolder> {
             holder.accept.setVisibility(View.GONE);
             holder.reject.setVisibility(View.GONE);
             holder.card.setCardBackgroundColor(Color.RED);
+            holder.desc_card.setCardBackgroundColor(Color.RED);
+            holder.arri_card.setCardBackgroundColor(Color.RED);
+            holder.depa_card.setCardBackgroundColor(Color.RED);
         }
         if(status==1){
             holder.accept.setVisibility(View.GONE);
             holder.reject.setVisibility(View.GONE);
             holder.card.setCardBackgroundColor(Color.GREEN);
+            holder.desc_card.setCardBackgroundColor(Color.GREEN);
+            holder.arri_card.setCardBackgroundColor(Color.GREEN);
+            holder.depa_card.setCardBackgroundColor(Color.GREEN);
         }
         holder.desc.setText(doc.getDescription());
         holder.name.setText(doc.getName());
+
         holder.start.setText(doc.getDepart().toDate().toString());
         holder.end.setText(doc.getArrival().toDate().toString());
         holder.email.setText(doc.getUid());
